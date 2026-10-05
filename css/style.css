@@ -1,0 +1,37 @@
+/******************************************
+/* CSS
+/*******************************************/
+
+/* Box Model Hack */
+*{
+  box-sizing: border-box;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+
+
+
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
+
+h1{
+  color: red;
+}
+
+.row{
+  border: 5px solid blue;
+  width: 50px;
+  height: 80px;
+}
+
+.row.A{
+  background-color: rgb(255, 0, 157);
+}
+
+.flipped{
+  background-image: url('..img/Melnea_Cass_02.jpg');
+  display: hidden;
+}
