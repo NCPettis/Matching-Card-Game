@@ -6,46 +6,158 @@
 //If yes stay flipped over
 //If no flip back
 //
--
+-LESSONS: learning how to have truly random events and not hard coding everything.
 -*/
+let cards = ['A', 'B', 'C', 'D', 'E']
+// let random = Math.floor(Math.random() * cards.length)
+let container =  document.querySelector("#container")
+let arr = []
 
+class Cards{
+//these values are something that the card has for its life
+    flipped = false;
+    display = true;
+    constructor(cardVal, storage){
+        this.value = cardVal;
+        this.element = storage;
 
-
-let cards = ['A', 'B', 'C', 'D', 'E','A', 'B', 'C', 'D', 'E'];
-
-while( cards.length > 0){
-
-let random = Math.floor(Math.random() * cards.length);
-// let randomCard = cards[random]
-console.log(random)
-const div = document.createElement('div')
-document.querySelector("#container").appendChild(div)
-
-div.classList.add('row',cards[random])
-// document.querySelectorAll('.row:not([card])')[random].classList.add(cards[0])
-cards.splice(random,1)
-
+    }
+//these functions are verbs because they effect the BEHAVIOR  of the cards
+    flip(){
+        this.flipped = !this.flipped
+    }
+    hide(){
+        this.display = false
+    }
 }
 
-document.querySelector("#container").addEventListener('click', pickCard)
-let cardOne = undefined
+class Board{
+    match = false
+    cardsFlipped = []
+    constructor(){
+        for(let i = 0; i<cards.length; i++){
 
-function pickCard(event){
-    event.target.classList.add('flipped')
-    if(cardOne == undefined){
-        cardOne = event.target
-        return
+            for(let b = 0; b <2; b++){
+            let newCard = document.createElement('div')
+                container.appendChild(newCard)
+            let card = new Cards(cards[i],newCard)
+            arr.push(card) //pushing the cards to the empty array cardsFlipped
+            
+            newCard.innerText = 'CARDFlipped'
+
+
+            newCard.addEventListener('click', ()=>{
+                if(this.cardsFlipped.length <2){
+                newCard.innerText = card.value
+                card.flip()
+                this.cardsFlipped.push(card)
+                }
+                console.log(this.cardsFlipped.length)
+                if(this.cardsFlipped[0]?.value==this.cardsFlipped[1]?.value){
+                   this.match = true
+                   alert('This is a Match')
+                //    display flippecCard or whatevs
+                }if(this.cardsFlipped.length ==2){
+                    for(card of this.cardsFlipped){
+                        card.element.innerText = 'CARDFlipped' 
+                    }
+                    this.cardsFlipped = []
+
+                }
+            })
+
+            }
+
+
+
+
+        }
     }
-    if(cardOne.className == event.target.className){
+    checkMatch(card1, card2){
+        if(card1 == card2){
+            match = true;
+        }
+    }
+}
 
-        console.log('They Match')
-    }else{
+document.querySelector('button').addEventListener('click', run)
+function run(){
+
+    let gameBoard = new Board()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let cards = ['A', 'B', 'C', 'D', 'E','A', 'B', 'C', 'D', 'E'];
+
+// while( cards.length > 0){
+
+// let random = Math.floor(Math.random() * cards.length);
+// // let randomCard = cards[random]
+// console.log(random)
+// const div = document.createElement('div')
+// document.querySelector("#container").appendChild(div)
+
+// div.classList.add('row',cards[random])
+// // document.querySelectorAll('.row:not([card])')[random].classList.add(cards[0])
+// cards.splice(random,1)
+
+// }
+
+// document.querySelector("#container").addEventListener('click', pickCard)
+// let cardOne = undefined
+
+// function pickCard(event){
+//     event.target.classList.add('flipped')
+//     if(cardOne == undefined){
+//         cardOne = event.target
+//         return
+//     }
+//     if(cardOne.className == event.target.className){
+
+//         console.log('They Match')
+//     }else{
     
-        event.target.classList.remove('flipped')
-        cardOne.classList.remove('flipped')
-    }
+//         event.target.classList.remove('flipped')
+//         cardOne.classList.remove('flipped')
+//     }
 
-console.log(event.target)
-}
+// console.log(event.target)
+// }
 
 // need to get CSS to reveal

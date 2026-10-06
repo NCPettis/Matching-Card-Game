@@ -16,7 +16,12 @@
 /******************************************
 /* ADDITIONAL STYLES
 /*******************************************/
-
+.gameBox{
+  display: flex;
+  flex-wrap: row wrap;
+  justify-content: center;
+  border: 5x solid red;
+}
 h1{
   color: red;
 }
@@ -31,7 +36,7 @@ h1{
   background-color: rgb(255, 0, 157);
 }
 
-.flipped{
-  background-image: url('..img/Melnea_Cass_02.jpg');
+div{
+  background-image: url('../img/Melnea_Cass_02.jpg');
   display: hidden;
 }
