@@ -8,6 +8,7 @@
 //
 -LESSONS: learning how to have truly random events and not hard coding everything.
 -*/
+
 let cards = ['A', 'B', 'C', 'D', 'E']
 // let random = Math.floor(Math.random() * cards.length)
 let container =  document.querySelector("#container")
@@ -47,44 +48,68 @@ class Board{
 
 
             newCard.addEventListener('click', ()=>{
-                if(this.cardsFlipped.length <2){
-                newCard.innerText = card.value
-                card.flip()
-                this.cardsFlipped.push(card)
-                }
-                console.log(this.cardsFlipped.length)
-                if(this.cardsFlipped[0]?.value==this.cardsFlipped[1]?.value){
-                   this.match = true
-                   alert('This is a Match')
-                //    display flippecCard or whatevs
-                }if(this.cardsFlipped.length ==2){
-                    for(card of this.cardsFlipped){
-                        card.element.innerText = 'CARDFlipped' 
-                    }
-                    this.cardsFlipped = []
 
+                if(card.flipped || this.cardsFlipped.length === 2) return //edit start
+
+                card.flip()
+                newCard.innerText = card.value
+                this.cardsFlipped.push(card)
+
+                if(this.cardsFlipped.length === 2){
+                    const first = this.cardsFlipped[0]
+                    const second = this.cardsFlipped[1]
+
+                    if(first.value === second.value){
+                        this.match = true
+                        this.cardsFlipped = []
+
+
+                        // newCard.innerText = card.value
+                        // card.flip()
+                        // this.cardsFlipped.push(card)
+                    }
+                    // console.log(this.cardsFlipped.length)
+                    // if(this.cardsFlipped[0]?.value==this.cardsFlipped[1]?.value){
+                    //    this.match = true
+                    // //    alert('This is a Match')
+                    // //   keep card flipped display flippecCard or whatevs
+                    //     this.cardsFlipped = []
+
+                    else{
+
+                    setTimeout(() =>{
+                        for (const loopy of [first, second]){
+                            loopy.flip()
+                            loopy.element.innerText = 'CARDFlipped'
+                        }
+                        this.cardsFlipped = []
+                    }, 800)
+                   
+                    }
                 }
             })
 
             }
 
 
-
-
+            }
+            
         }
     }
-    checkMatch(card1, card2){
-        if(card1 == card2){
-            match = true;
-        }
-    }
-}
 
-document.querySelector('button').addEventListener('click', run)
-function run(){
 
-    let gameBoard = new Board()
+
+function startGame(){
+    container.innerHTML = ''
+    arr = []
+    return new Board()    
+    
 }
+let gameBoard = startGame() //happens on page load but all the other elements must exist first so it can't be on top
+
+document.querySelector('button').addEventListener('click', () => {
+        gameBoard = startGame()
+})
 
 
 
