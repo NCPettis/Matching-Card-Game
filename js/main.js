@@ -9,7 +9,7 @@
 -LESSONS: learning how to have truly random events and not hard coding everything.
 -*/
 
-let cards = ['A', 'B', 'C', 'D', 'E']
+let cards = ['img/2.png', 'img/3.png', 'img/4.png', 'img/5.png', 'img/6.png']
 // let random = Math.floor(Math.random() * cards.length)
 let container =  document.querySelector("#container")
 let arr = []
@@ -42,9 +42,9 @@ class Board{
             let newCard = document.createElement('div')
                 container.appendChild(newCard)
             let card = new Cards(cards[i],newCard)
-            arr.push(card) //pushing the cards to the empty array cardsFlipped
+            arr.push(card) //pushing the cards to the empty array "arr"
             
-            newCard.innerText = 'CARDFlipped'
+            newCard.innerHTML = `<img src='img/The-Spotlight.png' alt='card back'>`
 
 
             newCard.addEventListener('click', ()=>{
@@ -52,7 +52,7 @@ class Board{
                 if(card.flipped || this.cardsFlipped.length === 2) return //edit start
 
                 card.flip()
-                newCard.innerText = card.value
+                newCard.innerHTML = `<img src='${card.value}' alt='card face'>`
                 this.cardsFlipped.push(card)
 
                 if(this.cardsFlipped.length === 2){
@@ -61,26 +61,21 @@ class Board{
 
                     if(first.value === second.value){
                         this.match = true
-                        this.cardsFlipped = []
+                        this.cardsFlipped = []//to me this line is saying when the card matches are true place them in the cardsFlipped array
 
-
-                        // newCard.innerText = card.value
-                        // card.flip()
-                        // this.cardsFlipped.push(card)
+                         if(arr.every(all => all.flipped)){
+                            document.querySelector('#winner').innerText = 'YOU FOUND ALL THE MATCHES!!!'
+                        }else{
+                            console.log(arr)
+                        }
                     }
-                    // console.log(this.cardsFlipped.length)
-                    // if(this.cardsFlipped[0]?.value==this.cardsFlipped[1]?.value){
-                    //    this.match = true
-                    // //    alert('This is a Match')
-                    // //   keep card flipped display flippecCard or whatevs
-                    //     this.cardsFlipped = []
 
                     else{
 
                     setTimeout(() =>{
                         for (const loopy of [first, second]){
                             loopy.flip()
-                            loopy.element.innerText = 'CARDFlipped'
+                            loopy.element.innerHTML = `<img src='img/The-Spotlight.png' alt='card back'>`
                         }
                         this.cardsFlipped = []
                     }, 800)
@@ -93,13 +88,22 @@ class Board{
 
 
             }
-            
+           
+            for(let i = arr.length -1; i > 0; i--){
+                const j = Math.floor(Math.random() * (i+1)); //was missing the semicolon. defensive semi colon forces the statement to end
+                [arr[i], arr[j]] = [arr[j], arr[i]]
+            }
+            for (const shuffle of arr){
+                container.appendChild(shuffle.element)
+            }
+
         }
     }
 
 
 
 function startGame(){
+    document.querySelector('#winner').innerText = ''
     container.innerHTML = ''
     arr = []
     return new Board()    
